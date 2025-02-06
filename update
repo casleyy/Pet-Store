@@ -1,0 +1,291 @@
+#include <iostream>
+#include <string>
+using namespace std;
+
+
+void UserInput(string& username, int& age, int& usercount); 
+void DisplayMenu();
+void OrderInfo(char& choice, int &quantity, float &total);
+void QuantityOrder(int& quantity);
+void OrderPlus (char& ordermore);
+void UserLog (char& newuser);
+void Cashier(float& total, float& mymoney, float& change);
+void CartIndexing(string(&PastFood)[5], float(&CartPrice)[5], int &CartCount, char& choice, float &total);
+void DisplayCart(int& CartCount, string(&PastFood)[5], float(&CartPrice)[5]);
+
+//mainmenu, display client cart
+
+
+int main()
+{
+	//user input
+	string username;
+	int age;
+
+	int usercount = 0;
+
+	int quantity = 0;
+
+	float total;
+	float mymoney;
+	float change;
+
+	//input from user to try again, order more, choice
+	char newuser;
+	char choice;
+	char ordermore;
+
+	//arrays to display cart
+	string PastFood[5];
+	float CartPrice[5];
+	int CartCount = 0;
+
+
+	cout << "Welcome to the Pet Store, Dear user !\n\n";
+	system("pause");
+
+	do {
+		total = 0; 
+		//sign up page
+		UserInput(username, age, usercount);
+		
+		//choice of menu plus allowing them to ordermore
+		do {
+			//display menu
+			DisplayMenu();
+
+			OrderInfo(choice, quantity, total);  
+
+			OrderPlus (ordermore);
+
+		} while (ordermore == 'Y');
+		//check outpage
+		Cashier(total, mymoney, change);
+
+
+
+		//asking if another user is gonna use the program
+		UserLog(newuser);
+	
+	} while (newuser == 'Y');
+	return 0;
+}
+
+
+void UserInput  (string &username, int &age, int &usercount){
+	system("cls");
+	cout << "- - -[USER INFO]- - -"
+		<< "\nHello, Dear User!"
+		<< "\nPlease enter your name: ";
+	cin >> username;
+
+	cout << "\nPlease enter your age: ";
+	cin >> age;
+
+	usercount++;
+
+	cout << "\nThank you for your cooperation and we hope this service pleases you!\n\n";
+}
+
+void DisplayMenu() {
+	system("pause");
+	system("cls");
+	cout << "- - -[MAIN MENU]- - -\n"
+		<<"A.\tPet Food\tPhp 200\n"
+		<<"B.\tPet Toy\t\tPhp 150\n"
+		<<"C.\tPet Bed\t\tPhp 230\n"
+		<<"D.\tPet Leash\tPhp 125\n"
+		<<"E.\tPet Brush\tPhp 175\n";
+}
+
+void OrderInfo(char& choice, int &quantity, float &total) {
+	//initializing the menu and its prices
+	float foodA = 200;
+	float toysB = 150;
+	float bedsC = 230;
+	float leashD = 125;
+	float brushE = 175;
+
+	cout << "\n\nChoice of order: ";
+	cin >> choice;
+
+	choice = toupper(choice);
+
+	switch (choice) {
+	case 'A':
+		cout << "\n\nYou have chosen A! Also known as Pet Food";
+
+		QuantityOrder(quantity);
+
+		total += (foodA * quantity);
+
+		cout << "\n\nYour total is now: Php " << total;
+
+		break;
+	case 'B':
+		cout << "\n\nYou have chosen B! Also known as Pet Toys";
+
+		QuantityOrder(quantity);
+
+		total += (toysB * quantity);
+
+		cout << "\n\nYour total is now: Php " << total;
+
+		break;
+	case 'C':
+		cout << "\n\nYou have chosen C! Also known as Pet Bed";
+
+		QuantityOrder(quantity);
+
+		total += (bedsC * quantity);
+
+		cout << "\n\nYour total is now: Php " << total;
+
+		break;
+	case 'D':
+		cout << "\n\nYou have chosen D! Also known as Pet Leash";
+
+		QuantityOrder(quantity);
+
+		total += (leashD * quantity);
+
+		cout << "\n\nYour total is now: Php " << total;
+
+		break;
+	case 'E':
+		cout << "\n\nYou have chosen E! Also known as Pet Brush";
+
+		QuantityOrder(quantity);
+
+		total += (brushE * quantity);
+
+		cout << "\n\nYour total is now: Php " << total;
+
+		break;
+	default:
+		cout << "\n\n That is not a valid response! Please try agan!";
+		break;
+	}
+
+}
+
+void QuantityOrder(int &quantity)  {
+	do {
+		quantity = 0;
+
+		cout << "\n\nHow much woud you like to order? ";
+		cin >> quantity;
+
+		if (quantity <= 0) {
+			cout << "\nInvaid Input ! Please try again!";
+		}
+	} while (quantity <= 0);
+}
+
+void OrderPlus (char& ordermore) {
+
+	do {
+		cout << "\n\nWould you still like to order some more ? (Y/N): ";
+		cin >> ordermore;
+
+		ordermore = toupper(ordermore);
+
+		if (ordermore != 'Y' && ordermore != 'N') {
+			cout << "\n\nInvalid response ! Please try again !";
+		}
+
+	} while (ordermore != 'Y' && ordermore != 'N');
+} 
+
+void UserLog(char& newuser) {
+		do {
+			cout << "\n\nIs another user gonna order?(Y/N): ";
+			cin >> newuser;
+
+			newuser = toupper(newuser);
+
+			if (newuser == 'Y') {
+				cout << "\n\nAlright! Going Back to the Sign Up page...\n\n";
+				system("pause");
+				system("cls");
+			}
+
+			else if (newuser == 'N') {
+				cout << "\n\nAlright! Moving on to the next part of the program...\n\n";
+				system("pause");
+				system("cls");
+			}
+			else {
+				cout << "\n\nInvalid Input ! Please try again!";
+			}
+		} while (newuser != 'Y' && newuser != 'N');
+	}
+
+void Cashier(float& total, float& mymoney, float& change) {
+	do {
+		mymoney = 0;
+		change = 0;
+		system("pause");
+		system("cls");
+
+		cout << "- - -[CHECK OUT]- - -"
+			<< "\nTotal amount to pay: Php " << total
+			<< "\n\nPlease Enter the Amount you would like to pay: ";
+		cin >> mymoney;
+
+		if (mymoney < total) {
+			cout << "\n\nYou have insufficent Funds! Please Try Again !\n\n";
+		}
+		else if (mymoney <= 0) {
+			cout << "\n\nInvalid Input! Please Try Again!\n\n";
+		}
+		else {
+			cout << "\n\nYou have decided to pay with Php " << mymoney;
+			change = mymoney - total;
+			cout << "\n\nYou have a change of:" << change << endl << endl;
+		}
+
+	} while (mymoney < total || mymoney <= 0);
+}
+
+void CartIndexing(string(&PastFood)[5], float(&CartPrice)[5], int &CartCount, char &choice, float &total) {
+	if (choice == 'A') {
+		PastFood[CartCount % 5] = { "Pet Food" }; 
+		CartPrice[CartCount % 5] = total; 
+		CartCount++; 
+	}
+	else if (choice == 'B') {
+		PastFood[CartCount % 5] = { "Pet Toys" }; 
+		CartPrice[CartCount % 5] = total; 
+		CartCount++; 
+	}
+	else if (choice == 'C') {
+		PastFood[CartCount % 5] = { "Pet Bed" }; 
+		CartPrice[CartCount % 5] = total; 
+		CartCount++; 
+	}
+	else if (choice == 'D') {
+		PastFood[CartCount % 5] = { "Pet Leash" };
+		CartPrice[CartCount % 5] = total;
+		CartCount++;
+	}
+	else if (choice == 'E') {
+		PastFood[CartCount % 5] = { "Pet Brush" }; 
+		CartPrice[CartCount % 5] = total; 
+		CartCount++; 
+	}
+}
+
+void DisplayCart(int& CartCount, string(&PastFood)[5], float (&CartPrice)[5]) {
+	cout << "- - -[CLIENT HISTORY]- - -";
+	if (CartCount == 0) {
+		cout << "\n\nNo Transactions were made!";
+	}
+	else {
+		//displaying array
+		for (int i = 0; i < CartCount; i++) {
+			cout << PastFood[i] << " : Php " << CartPrice[i] << endl;
+		}
+	}
+	system("pause");
+} 
